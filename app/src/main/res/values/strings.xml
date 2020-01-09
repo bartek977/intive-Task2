@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Login flow app</string>
+    <string name="login_button">Login</string>
+    <string name="logout_button">Logout</string>
+    <string name="email_text">E-mail</string>
+    <string name="login_text">Login</string>
+    <string name="password_text">Password</string>
+</resources>
