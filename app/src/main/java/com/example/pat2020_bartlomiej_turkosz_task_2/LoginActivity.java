@@ -13,13 +13,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    private String emailPattern = "[\\w\\d\\.\\-=\\+_]+@[\\w\\d\\-=\\+_]+\\.\\w+";
-    private String loginPattern = "[a-z]+";
-    //password is checking in isGoodPassword method
+    private final String emailPattern = "[\\w\\d\\.\\-=\\+_]+@[\\w\\d\\-=\\+_]+\\.\\w+";
+    private final String loginPattern = "[a-z]+";
+    //password is checking in isPasswordValid method
 
     private String email;
     private String login;
     private String password;
+
     private EditText emailText;
     private EditText loginText;
     private EditText passwordText;
@@ -37,6 +38,14 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             setContentView(R.layout.activity_login);
         }
+        incorrectData = findViewById(R.id.incorrectData);
+
+        if (savedInstanceState != null) {
+
+            String incorrect = savedInstanceState.getString(getString(R.string.incorrect_data_key));
+            incorrectData.setText(incorrect);
+            incorrectData.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -48,21 +57,21 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view) {
         emailText = findViewById(R.id.emailInput);
-        String email = emailText.getText().toString();
+        email = emailText.getText().toString();
 
         loginText = findViewById(R.id.loginInput);
-        String login = loginText.getText().toString();
+        login = loginText.getText().toString();
 
         passwordText = findViewById(R.id.passwordInput);
-        String password = passwordText.getText().toString();
+        password = passwordText.getText().toString();
 
-        if(email.matches(emailPattern) && login.matches(loginPattern) && isGoodPassword(password)) {
+        if(email.matches(emailPattern) && login.matches(loginPattern) && isPasswordValid(password)) {
 
-            SharedPreferences sharedPref = getSharedPreferences("Account",MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences(getString(R.string.account_key),MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("email",email);
-            editor.putString("login",login);
-            editor.putString("password",password);
+            editor.putString(getString(R.string.email_key),email);
+            editor.putString(getString(R.string.login_key),login);
+            editor.putString(getString(R.string.password_key),password);
             editor.commit();
 
 
@@ -76,20 +85,28 @@ public class LoginActivity extends AppCompatActivity {
             StringBuilder message = new StringBuilder();
 
             if(!email.matches(emailPattern)) message.append("Incorrect Email\n");
-            if(!login.matches(loginPattern)) message.append("Incorrect Login\n");
-            if(!isGoodPassword(password)) message.append("Incorrect Password\n");
+            if(!login.matches(loginPattern)) message.append("Incorrect login\n");
+            if(!isPasswordValid(password)) message.append("Incorrect Password\n");
 
-            incorrectData = findViewById(R.id.incorrectData);
             incorrectData.setText(message.toString());
             incorrectData.setVisibility(View.VISIBLE);
         }
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+
+
+        savedInstanceState.putString(getString(R.string.incorrect_data_key), incorrectData.getText().toString());
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
     //Provided password should contain min 6 characters with min one number and
     //one special character
 
-    public boolean isGoodPassword(String pass) {
+    public boolean isPasswordValid(String pass) {
 
         boolean result = false;
 

@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         logoutButton = findViewById(R.id.logoutButton);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
-        email = sharedPreferences.getString("email", "null");
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.account_key), MODE_PRIVATE);
+        email = sharedPreferences.getString(getString(R.string.email_key), getString(R.string.default_value));
 
     }
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onResume();
 
-        if (email!=null && email.equals("null")) {
+        if (email!=null && email.equals(getString(R.string.default_value))) {
             loginButton.setVisibility(View.VISIBLE);
             logoutButton.setVisibility(View.INVISIBLE);
         } else {
@@ -44,24 +44,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void Login(View view) {
+    public void login(View view) {
 
         Intent startActivity = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(startActivity);
 
     }
 
-    public void Logout(View view) {
 
-        SharedPreferences sharedPref = getSharedPreferences("Account",MODE_PRIVATE);
+    public void logout(View view) {
+
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.account_key),MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("email","null");
-        editor.putString("login","null");
-        editor.putString("password","null");
+        editor.putString(getString(R.string.email_key),getString(R.string.default_value));
+        editor.putString(getString(R.string.login_key),getString(R.string.default_value));
+        editor.putString(getString(R.string.password_key),getString(R.string.default_value));
         editor.commit();
 
         Intent startActivity = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(startActivity);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
 }

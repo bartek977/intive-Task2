@@ -9,24 +9,22 @@ import android.widget.TextView;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private String TIME_DELAY_KEY;
-    long TIME_DELAY = 6000;
-    boolean FromAnotherActivity = false;
+    long timeDelay = 6000;
 
     private TextView welcomeText;
     private long time;
 
-    Handler handler = new Handler();
-    Runnable myRunnable = new Runnable() {
+    final Handler handler = new Handler();
+    final Runnable myRunnable = new Runnable() {
         @Override
         public void run() {
 
-            SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
-            String email = sharedPreferences.getString("email","null");
+            SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.account_key), MODE_PRIVATE);
+            String email = sharedPreferences.getString(getString(R.string.email_key),getString(R.string.default_value));
 
-            boolean logged = !email.equals("null");
+            boolean logged = !email.equals(getString(R.string.default_value));
 
-            Intent startActivity = null;
+            Intent startActivity;
 
             if(logged)
             {
@@ -37,6 +35,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity = new Intent(SplashActivity.this, LoginActivity.class);
             }
             startActivity(startActivity);
+            finish();
 
         }
     };
@@ -50,17 +49,18 @@ public class SplashActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
-            TIME_DELAY = savedInstanceState.getLong(TIME_DELAY_KEY);
+            timeDelay = savedInstanceState.getLong(getString(R.string.time_delay_key));
         }
 
 
         welcomeText = findViewById(R.id.textWelcome);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
-        String email = sharedPreferences.getString("email","null");
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.account_key), MODE_PRIVATE);
+        String email = sharedPreferences.getString(getString(R.string.email_key),getString(R.string.default_value));
 
-        if (email.equals("null")) welcomeText.setText("Welcome My Friend");
-        else welcomeText.setText("Welcome ".concat(email));
+        if (email.equals(getString(R.string.default_value))) welcomeText.setText(getString(R.string.welcome_text));
+        else welcomeText.setText(getString(R.string.welcome_user, email));
+
 
     }
 
@@ -68,30 +68,19 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(FromAnotherActivity)
-        {
-            TIME_DELAY = 6000;
-        }
-
         time = System.currentTimeMillis();
-        handler.postDelayed(myRunnable,TIME_DELAY);
+        handler.postDelayed(myRunnable, timeDelay);
 
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        FromAnotherActivity = true;
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
 
         long timeNow = System.currentTimeMillis();
-        long remainingTime = TIME_DELAY - (timeNow - time);
+        long remainingTime = timeDelay - (timeNow - time);
 
-        savedInstanceState.putLong(TIME_DELAY_KEY, remainingTime);
+        savedInstanceState.putLong(getString(R.string.time_delay_key), remainingTime);
 
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -101,6 +90,5 @@ public class SplashActivity extends AppCompatActivity {
         super.onDestroy();
 
         handler.removeCallbacks(myRunnable);
-        FromAnotherActivity = false;
     }
 }

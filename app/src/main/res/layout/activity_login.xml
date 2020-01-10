@@ -106,7 +106,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="28dp"
-        android:text="TEST"
         android:textColor="#F1060C"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
