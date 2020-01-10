@@ -11,6 +11,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private String TIME_DELAY_KEY;
     long TIME_DELAY = 6000;
+    boolean FromAnotherActivity = false;
 
     private TextView welcomeText;
     private long time;
@@ -52,6 +53,7 @@ public class SplashActivity extends AppCompatActivity {
             TIME_DELAY = savedInstanceState.getLong(TIME_DELAY_KEY);
         }
 
+
         welcomeText = findViewById(R.id.textWelcome);
 
         SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
@@ -66,6 +68,11 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if(FromAnotherActivity)
+        {
+            TIME_DELAY = 6000;
+        }
+
         time = System.currentTimeMillis();
         handler.postDelayed(myRunnable,TIME_DELAY);
 
@@ -75,7 +82,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        TIME_DELAY = 6000;
+        FromAnotherActivity = true;
     }
 
     @Override
@@ -94,5 +101,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onDestroy();
 
         handler.removeCallbacks(myRunnable);
+        FromAnotherActivity = false;
     }
 }
