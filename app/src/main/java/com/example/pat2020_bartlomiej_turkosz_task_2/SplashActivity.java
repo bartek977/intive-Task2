@@ -60,13 +60,26 @@ public class SplashActivity extends AppCompatActivity {
         if (email.equals("null")) welcomeText.setText("Welcome My Friend");
         else welcomeText.setText("Welcome ".concat(email));
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         time = System.currentTimeMillis();
         handler.postDelayed(myRunnable,TIME_DELAY);
 
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    protected void onPause() {
+        super.onPause();
+
+        TIME_DELAY = 6000;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
 
         long timeNow = System.currentTimeMillis();
         long remainingTime = TIME_DELAY - (timeNow - time);
