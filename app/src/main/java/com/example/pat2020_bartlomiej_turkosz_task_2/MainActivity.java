@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onResume();
 
-        if (email!=null && email.equals(getString(R.string.default_value))) {
+        if (email != null && email.equals(getString(R.string.default_value))) {
             loginButton.setVisibility(View.VISIBLE);
             logoutButton.setVisibility(View.INVISIBLE);
         } else {
@@ -54,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout(View view) {
 
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.account_key),MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.account_key), MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.email_key),getString(R.string.default_value));
-        editor.putString(getString(R.string.login_key),getString(R.string.default_value));
-        editor.putString(getString(R.string.password_key),getString(R.string.default_value));
+        editor.putString(getString(R.string.email_key), getString(R.string.default_value));
+        editor.putString(getString(R.string.login_key), getString(R.string.default_value));
+        editor.putString(getString(R.string.password_key), getString(R.string.default_value));
         editor.commit();
 
         Intent startActivity = new Intent(MainActivity.this, LoginActivity.class);

@@ -14,4 +14,7 @@
     <string name="password_key">password</string>
     <string name="time_delay_key">timeDelayKey</string>
     <string name="incorrect_data_key">incorrectDataKey</string>
+    <string name="incorrect_email_text">Incorrect Email\\n</string>
+    <string name="incorrect_login_text">Incorrect login</string>
+    <string name="incorrect_password_text">Incorrect Password</string>
 </resources>

@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 public class SplashActivity extends AppCompatActivity {
 
-    long timeDelay = 6000;
+    final static long SPLASH_SCREEN_START_DURATION = 6000;
+
+    long timeDelay = SPLASH_SCREEN_START_DURATION;
 
     private TextView welcomeText;
     private long time;
@@ -20,18 +22,15 @@ public class SplashActivity extends AppCompatActivity {
         public void run() {
 
             SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.account_key), MODE_PRIVATE);
-            String email = sharedPreferences.getString(getString(R.string.email_key),getString(R.string.default_value));
+            String email = sharedPreferences.getString(getString(R.string.email_key), getString(R.string.default_value));
 
             boolean logged = !email.equals(getString(R.string.default_value));
 
             Intent startActivity;
 
-            if(logged)
-            {
+            if (logged) {
                 startActivity = new Intent(SplashActivity.this, MainActivity.class);
-            }
-            else
-            {
+            } else {
                 startActivity = new Intent(SplashActivity.this, LoginActivity.class);
             }
             startActivity(startActivity);
@@ -39,7 +38,6 @@ public class SplashActivity extends AppCompatActivity {
 
         }
     };
-
 
 
     @Override
@@ -56,9 +54,10 @@ public class SplashActivity extends AppCompatActivity {
         welcomeText = findViewById(R.id.textWelcome);
 
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.account_key), MODE_PRIVATE);
-        String email = sharedPreferences.getString(getString(R.string.email_key),getString(R.string.default_value));
+        String email = sharedPreferences.getString(getString(R.string.email_key), getString(R.string.default_value));
 
-        if (email.equals(getString(R.string.default_value))) welcomeText.setText(getString(R.string.welcome_text));
+        if (email.equals(getString(R.string.default_value)))
+            welcomeText.setText(getString(R.string.welcome_text));
         else welcomeText.setText(getString(R.string.welcome_user, email));
 
 
@@ -86,8 +85,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
 
         handler.removeCallbacks(myRunnable);
     }
