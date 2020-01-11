@@ -67,10 +67,10 @@ public class LoginActivity extends AppCompatActivity {
             StringBuilder message = new StringBuilder();
 
             if (!email.matches(emailPattern))
-                message.append(R.string.incorrect_email_text).append("\n");
+                message.append(getString(R.string.incorrect_email_text)).append("\n");
             if (!login.matches(loginPattern))
-                message.append(R.string.incorrect_login_text).append("\n");
-            if (!isPasswordValid(password)) message.append(R.string.incorrect_password_text);
+                message.append(getString(R.string.incorrect_login_text)).append("\n");
+            if (!isPasswordValid(password)) message.append(getString(R.string.incorrect_password_text));
 
             incorrectData.setText(message.toString());
             incorrectData.setVisibility(View.VISIBLE);
