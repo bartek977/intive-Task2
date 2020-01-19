@@ -9,6 +9,10 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    final static String emailKey = "email";
+    final static String passwordKey = "password";
+    final static String loginKey = "login";
+    final static String accountKey = "account";
 
     private String email;
 
@@ -24,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         logoutButton = findViewById(R.id.logoutButton);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.account_key), MODE_PRIVATE);
-        email = sharedPreferences.getString(getString(R.string.email_key), getString(R.string.default_value));
+        SharedPreferences sharedPreferences = getSharedPreferences(accountKey, MODE_PRIVATE);
+        email = sharedPreferences.getString(emailKey, getString(R.string.default_value));
 
     }
 
@@ -54,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout(View view) {
 
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.account_key), MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(accountKey, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.email_key), getString(R.string.default_value));
-        editor.putString(getString(R.string.login_key), getString(R.string.default_value));
-        editor.putString(getString(R.string.password_key), getString(R.string.default_value));
+        editor.putString(emailKey, getString(R.string.default_value));
+        editor.putString(loginKey, getString(R.string.default_value));
+        editor.putString(passwordKey, getString(R.string.default_value));
         editor.commit();
 
         Intent startActivity = new Intent(MainActivity.this, LoginActivity.class);

@@ -2,7 +2,6 @@ package com.example.pat2020_bartlomiej_turkosz_task_2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +11,12 @@ import android.widget.TextView;
 public class LoginActivity extends AppCompatActivity {
 
     private TextView incorrectData;
+
+    final static String emailKey = "email";
+    final static String passwordKey = "password";
+    final static String loginKey = "login";
+    final static String accountKey = "account";
+    final static String incorrectDataKey = "incorrectDataKey";
 
 
     @Override
@@ -24,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
 
-            String incorrect = savedInstanceState.getString(getString(R.string.incorrect_data_key));
+            String incorrect = savedInstanceState.getString(incorrectDataKey);
             incorrectData.setText(incorrect);
             incorrectData.setVisibility(View.VISIBLE);
         }
@@ -52,11 +57,11 @@ public class LoginActivity extends AppCompatActivity {
 
         if (email.matches(emailPattern) && login.matches(loginPattern) && isPasswordValid(password)) {
 
-            SharedPreferences sharedPref = getSharedPreferences(getString(R.string.account_key), MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences(accountKey, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(getString(R.string.email_key), email);
-            editor.putString(getString(R.string.login_key), login);
-            editor.putString(getString(R.string.password_key), password);
+            editor.putString(emailKey, email);
+            editor.putString(loginKey, login);
+            editor.putString(passwordKey, password);
             editor.commit();
 
 
@@ -82,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle savedInstanceState) {
 
 
-        savedInstanceState.putString(getString(R.string.incorrect_data_key), incorrectData.getText().toString());
+        savedInstanceState.putString(incorrectDataKey, incorrectData.getText().toString());
 
         super.onSaveInstanceState(savedInstanceState);
     }
