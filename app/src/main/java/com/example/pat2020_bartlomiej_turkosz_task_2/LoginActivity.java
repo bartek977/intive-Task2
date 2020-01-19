@@ -12,11 +12,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView incorrectData;
 
-    final static String emailKey = "email";
-    final static String passwordKey = "password";
-    final static String loginKey = "login";
-    final static String accountKey = "account";
-    final static String incorrectDataKey = "incorrectDataKey";
+    final static String EMAIL_KEY = "email";
+    final static String PASSWORD_KEY = "password";
+    final static String LOGIN_KEY = "login";
+    final static String ACCOUNT_KEY = "account";
+    final static String INCORRECT_DATA_KEY = "incorrectDataKey";
 
 
     @Override
@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
 
-            String incorrect = savedInstanceState.getString(incorrectDataKey);
+            String incorrect = savedInstanceState.getString(INCORRECT_DATA_KEY);
             incorrectData.setText(incorrect);
             incorrectData.setVisibility(View.VISIBLE);
         }
@@ -57,11 +57,11 @@ public class LoginActivity extends AppCompatActivity {
 
         if (email.matches(emailPattern) && login.matches(loginPattern) && isPasswordValid(password)) {
 
-            SharedPreferences sharedPref = getSharedPreferences(accountKey, MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences(ACCOUNT_KEY, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(emailKey, email);
-            editor.putString(loginKey, login);
-            editor.putString(passwordKey, password);
+            editor.putString(EMAIL_KEY, email);
+            editor.putString(LOGIN_KEY, login);
+            editor.putString(PASSWORD_KEY, password);
             editor.commit();
 
 
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle savedInstanceState) {
 
 
-        savedInstanceState.putString(incorrectDataKey, incorrectData.getText().toString());
+        savedInstanceState.putString(INCORRECT_DATA_KEY, incorrectData.getText().toString());
 
         super.onSaveInstanceState(savedInstanceState);
     }

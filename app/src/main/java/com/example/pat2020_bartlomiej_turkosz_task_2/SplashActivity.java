@@ -13,9 +13,10 @@ public class SplashActivity extends AppCompatActivity {
 
     long timeDelay = SPLASH_SCREEN_START_DURATION;
 
-    final static String emailKey = "email";
-    final static String timeDelayKey = "timeDelayKey";
-    final static String accountKey = "account";
+    final static String EMAIL_KEY = "email";
+    final static String TIME_DELAY_KEY = "timeDelayKey";
+    final static String ACCOUNT_KEY = "account";
+    final static String DEFAULT_VALUE = "null";
 
     private long time;
 
@@ -24,10 +25,10 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void run() {
 
-            SharedPreferences sharedPreferences = getSharedPreferences(accountKey, MODE_PRIVATE);
-            String email = sharedPreferences.getString(emailKey, getString(R.string.default_value));
+            SharedPreferences sharedPreferences = getSharedPreferences(ACCOUNT_KEY, MODE_PRIVATE);
+            String email = sharedPreferences.getString(EMAIL_KEY, DEFAULT_VALUE);
 
-            boolean logged = email!=null && !email.equals(getString(R.string.default_value));
+            boolean logged = email!=null && !email.equals(DEFAULT_VALUE);
 
             Intent startActivity;
 
@@ -50,16 +51,16 @@ public class SplashActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
-            timeDelay = savedInstanceState.getLong(timeDelayKey);
+            timeDelay = savedInstanceState.getLong(TIME_DELAY_KEY);
         }
 
 
         TextView welcomeText = findViewById(R.id.textWelcome);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(accountKey, MODE_PRIVATE);
-        String email = sharedPreferences.getString(emailKey, getString(R.string.default_value));
+        SharedPreferences sharedPreferences = getSharedPreferences(ACCOUNT_KEY, MODE_PRIVATE);
+        String email = sharedPreferences.getString(EMAIL_KEY, DEFAULT_VALUE);
 
-        if (email!=null && email.equals(getString(R.string.default_value)))
+        if (email!=null && email.equals(DEFAULT_VALUE))
             welcomeText.setText(getString(R.string.welcome_text));
         else welcomeText.setText(getString(R.string.welcome_user, email));
 
@@ -82,7 +83,7 @@ public class SplashActivity extends AppCompatActivity {
         long timeNow = System.currentTimeMillis();
         long remainingTime = timeDelay - (timeNow - time);
 
-        savedInstanceState.putLong(timeDelayKey, remainingTime);
+        savedInstanceState.putLong(TIME_DELAY_KEY, remainingTime);
 
         super.onSaveInstanceState(savedInstanceState);
     }

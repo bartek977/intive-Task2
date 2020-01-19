@@ -9,10 +9,11 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    final static String emailKey = "email";
-    final static String passwordKey = "password";
-    final static String loginKey = "login";
-    final static String accountKey = "account";
+    final static String EMAIL_KEY = "email";
+    final static String PASSWORD_KEY = "password";
+    final static String LOGIN_KEY = "login";
+    final static String ACCOUNT_KEY = "account";
+    final static String DEFAULT_VALUE = "null";
 
     private String email;
 
@@ -28,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         logoutButton = findViewById(R.id.logoutButton);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(accountKey, MODE_PRIVATE);
-        email = sharedPreferences.getString(emailKey, getString(R.string.default_value));
+        SharedPreferences sharedPreferences = getSharedPreferences(ACCOUNT_KEY, MODE_PRIVATE);
+        email = sharedPreferences.getString(EMAIL_KEY, DEFAULT_VALUE);
 
     }
 
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onResume();
 
-        if (email != null && email.equals(getString(R.string.default_value))) {
+        if (email != null && email.equals(DEFAULT_VALUE)) {
             loginButton.setVisibility(View.VISIBLE);
             logoutButton.setVisibility(View.INVISIBLE);
         } else {
@@ -58,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout(View view) {
 
-        SharedPreferences sharedPref = getSharedPreferences(accountKey, MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(ACCOUNT_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(emailKey, getString(R.string.default_value));
-        editor.putString(loginKey, getString(R.string.default_value));
-        editor.putString(passwordKey, getString(R.string.default_value));
+        editor.putString(EMAIL_KEY, DEFAULT_VALUE);
+        editor.putString(LOGIN_KEY, DEFAULT_VALUE);
+        editor.putString(PASSWORD_KEY, DEFAULT_VALUE);
         editor.commit();
 
         Intent startActivity = new Intent(MainActivity.this, LoginActivity.class);
